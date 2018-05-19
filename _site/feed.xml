@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-19T21:07:30+01:00</updated><id>http://localhost:4000/</id><title type="html">caffeinated.tech</title><subtitle>A tech blog on web development, server administration and assorted electronics</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2018/05/19/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-05-19T18:11:36+01:00</published><updated>2018-05-19T18:11:36+01:00</updated><id>http://localhost:4000/jekyll/update/2018/05/19/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/05/19/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-19T21:36:13+01:00</updated><id>http://localhost:4000/</id><title type="html">caffeinated.tech</title><subtitle>A tech blog on web development, server administration and assorted electronics</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2018/05/19/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-05-19T18:11:36+01:00</published><updated>2018-05-19T18:11:36+01:00</updated><id>http://localhost:4000/jekyll/update/2018/05/19/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/05/19/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
 
 &lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
 
@@ -10,4 +10,236 @@
 &lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry><entry><title type="html">React and Coffeescript</title><link href="http://localhost:4000/react/coffeescript/2018/05/19/react-and-coffeescript.html" rel="alternate" type="text/html" title="React and Coffeescript" /><published>2018-05-19T18:11:36+01:00</published><updated>2018-05-19T18:11:36+01:00</updated><id>http://localhost:4000/react/coffeescript/2018/05/19/react-and-coffeescript</id><content type="html" xml:base="http://localhost:4000/react/coffeescript/2018/05/19/react-and-coffeescript.html">&lt;content id=&quot;blog&quot;&gt;
+  &lt;h2 id=&quot;Coffeescript and React&quot;&gt;&lt;a href=&quot;#Coffeescript and React&quot;&gt;Coffeescript and React ( without JSX )&lt;/a&gt;&lt;/h2&gt;    
+  &lt;p&gt; 
+    
+  &lt;/p&gt;
+  
+  &lt;h3 id=&quot;Coffeescript&quot;&gt;&lt;a href=&quot;#Coffeescript&quot;&gt;Coffeescript&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    Coffeescript is a Javascript superscript (it transpiles to Javascript) similar to TypeScript and ActiveScript. It was written in 09/10 to show off &quot;the good parts&quot; of Javascript. It ships as the default Javascript engine with Ruby on Rails since version 3.1 which has helped make it one of the most popular JavaScript superscript on Github to date.
+  &lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;
+      Underneath that awkward Java-esque patina, JavaScript has always had a gorgeous heart. CoffeeScript is an attempt to expose the good parts of JavaScript in a simple way.
+     &lt;a href=&quot;http://coffeescript.org/&quot;&gt;-- coffeescript.org&lt;/a&gt;
+    &lt;/p&gt;
+  &lt;/blockquote&gt;
+
+  &lt;h3 id=&quot;ReactJS&quot;&gt;&lt;a href=&quot;#ReactJS&quot;&gt;ReactJS&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    React is the front end view library (note: it's not a framework) by Facebook which is heralded by developers for making complex UIs easy to manage, while (often) improving performance of web applications. React's core concept is stateful views. Given the same state it will always render the same view, regardless of how it arrived at this state. It was built to erradicate awkward to reproduce errors from complex UIs, as detailed in &lt;a href=&quot;https://www.youtube.com/watch?v=XxVg_s8xAms&quot; target=&quot;_blank&quot;&gt;the presentation introducing ReactJS&lt;/a&gt; in 2013 by Tom Occhino and Jordan Walke.  
+  &lt;/p&gt;
+  &lt;p&gt;
+    It comes with it's own language, JSX, which allows the use of HTML-esque XML markup to create view components inside Javascript files. Think of your typical templating language which embeds code inside a HTML view, only in reverse. 
+  &lt;/p&gt;
+  &lt;p&gt;
+    But honestly, I'm not a fan of it. As a Coffeescript dev, the idea of all those extra angle brackets from the JSX syntax inside the render method is unappealing. A side effect of having your view inside your code, is what happens when you want code inside your view (eg. for attaching click listeners or binding values). The result is deeply nested : javascript expressions inside curly braces inside HTML like markup inside your JS file. Because you are limited to JS expressions inside the view ( eg. text within a span, conditional classes) means that you have to resort to tertiary operators or anonymous, self-executing functions rather than the more legible &lt;code class=&quot;language-javascript&quot;&gt;if&lt;/code&gt; / &lt;code class=&quot;language-javascript&quot;&gt;else&lt;/code&gt; statements.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Take a look at a basic form component straight from the &lt;a href=&quot;https://facebook.github.io/react/docs/forms.html&quot;&gt;React docs&lt;/a&gt;
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;
+    class NameForm extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+
+      handleChange(event) {
+        this.setState({value: event.target.value});
+      }
+
+      handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+      }
+
+      render() {
+        return (
+          &amp;lt;form onSubmit={this.handleSubmit}&amp;gt;
+            &amp;lt;label&amp;gt;
+              Name:
+              &amp;lt;input type=&quot;text&quot; value={this.state.value} onChange={this.handleChange} /&amp;gt;
+            &amp;lt;/label&amp;gt;
+            &amp;lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&amp;gt;
+          &amp;lt;/form&amp;gt;
+        );
+      }
+    }
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    The React component representing a form with an input element is represented as an ES6 Class. When constructed, the component is assigned a base &lt;code class=&quot;javascript&quot;&gt;state&lt;/code&gt; where the input value will be saved. This state is used within the render method, which is the equivalent of a one-way data binding in frameworks like AngularJS. To make the view update when the user updates the value in the text input field, an &lt;code class=&quot;javascript&quot;&gt;onChange&lt;/code&gt; handler needs to be attached, which will update the state via the &lt;code class=&quot;javascript&quot;&gt;this.setState&lt;/code&gt; method. This triggers a re-render of the component with the updated value.
+  &lt;/p&gt;
+  &lt;p&gt;
+    This value can be pulled from the state to be used in the &lt;code class=&quot;javascript&quot;&gt;onSubmit&lt;/code&gt; handler, where you could post it to a server or persist in localstorage. But one caveat is the need for binding the component instance to the event listeners, as otherwise the event would override &lt;code class=&quot;javascript&quot;&gt;this&lt;/code&gt; within the scope of the callback methods. 
+  &lt;/p&gt;
+  &lt;p&gt;
+    It's all fairly straightforward, but it's also a trivial example. It can be made even cleaner by dropping the JSX syntax and rewriting the whole thing in Coffeescript
+  &lt;/p&gt;
+
+  &lt;h2 id=&quot;Converting_to_Coffeescript&quot;&gt;&lt;a href=&quot;#Converting_to_Coffeescript&quot;&gt;Converting to Coffeescript&lt;/a&gt;&lt;/h2&gt;
+  
+  &lt;h3 id=&quot;Replacing_JSX&quot;&gt;&lt;a href=&quot;#Replacing_JSX&quot;&gt;Replacing JSX&lt;/a&gt;&lt;/h3&gt;
+  &lt;p&gt;
+    It is of course possible to write React without JSX in vanilla Javascript. But without JSX, we need to manually call of the &lt;code class=&quot;language-javascript&quot;&gt;React.DOM&lt;/code&gt; factories to build components out of the React representations of DOM elements. Markup as simple as the form above becomes convoluted when we have to call the methods and pass it object properties and child components.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Here is the render method in vanilla Javascript:
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;
+    render() {
+      return React.DOM.form({ onSubmit: this.handleSubmit },
+        React.DOM.label({}, &quot;Name&quot;, 
+          React.DOM.input({ type: 'text', value: this.state.value, onChange: this.handleChange })
+        )
+        React.DOM.input({ type: 'submit', value: 'Submit' })
+      )
+    }  
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    It's not pretty, especially due to the deeply nested DOM components (&lt;code class=&quot;language-javascript&quot;&gt;React.DOM.x&lt;/code&gt;). But there are a lot of Coffeescript features which come in useful with React.
+  &lt;/p&gt;
+  
+  &lt;h3 id=&quot;Destructuring_Assignment&quot;&gt;&lt;a href=&quot;#Destructuring_Assignment&quot;&gt;Destructuring Assignment&lt;/a&gt;&lt;/h3&gt;
+  &lt;p&gt;
+    The &lt;a href=&quot;http://coffeescript.org/#destructuring&quot; target=&quot;_blank&quot;&gt;destructuring assignment&lt;/a&gt; allows us to pull object properties into separate variables with ease. Using this you can pull only those DOM elements which you need for each component into the parent scope:
+  &lt;/p&gt; 
+  &lt;aside&gt;
+    &lt;strong&gt;NOTE:&lt;/strong&gt; This is possible in Javascript since ES6 too (see &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment&quot; target=&quot;_blank&quot;&gt;destructuring assignment documentation on MDN&lt;/a&gt; for details)
+  &lt;/aside&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot;&gt;
+    { form, label, input } = React.DOM
+  &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;h3 id=&quot;this&quot;&gt;&lt;a href=&quot;#this&quot;&gt;@ === this&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    A useful shortcut in coffeescript is that the &lt;code class=&quot;language-coffeescript&quot;&gt;@&lt;/code&gt; symbol refers to &lt;code  class=&quot;language-coffeescript&quot;&gt;this&lt;/code&gt;. This is a convention borrowed from ruby where &lt;code  class=&quot;language-coffeescript&quot;&gt;@&lt;/code&gt; denotes any instance variables. If you want to access a property on the &lt;code  class=&quot;language-coffeescript&quot;&gt;this&lt;/code&gt;, then you can even skip the dot :
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code  class=&quot;language-coffeescript&quot;&gt;
+    form
+      onSubmit: @handleSubmit
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    Here you can already see the &lt;code  class=&quot;language-coffeescript&quot;&gt;form&lt;/code&gt; factory which was pulled from &lt;code  class=&quot;language-coffeescript&quot;&gt;React.DOM&lt;/code&gt; being called straight from the root scope within our file.
+  &lt;/p&gt;
+
+  &lt;h3 id=&quot;Indentation_instead_of_brackets&quot;&gt;&lt;a href=&quot;#Indentation_instead_of_brackets&quot;&gt;Indentation instead of brackets&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    This is the one feature of Coffeescript which got me hooked. Once you remove all the excessive brackets, semicolons and commas from Javascript, it becomes an elegant language. No brackets are used to call a function (given that it is being passed arguments). No brackets are needed to wrap a function body or code block. No brackets are needed to denote an object and commas are optional. Here is the resulting render function in Coffeescript
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code  class=&quot;language-coffeescript&quot;&gt;
+    render: -&gt;
+      form
+        onSubmit: @handleSubmit
+        label null,
+          'name'
+          input
+            type: 'text'
+            value: @state.value
+            onChange: @handleChange
+        input
+          type: 'submit'
+          'Submit'
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    Isn't it beautiful? 
+  &lt;/p&gt;
+  &lt;p&gt;
+    There are two Coffeescript features involved here. If you call a method in Coffeescript, and the first param is an object, then you can just pass it starting on the next line. Eg, the &lt;code  class=&quot;language-coffeescript&quot;&gt;setState&lt;/code&gt; call from &lt;code  class=&quot;language-coffeescript&quot;&gt;handleChange&lt;/code&gt; :
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code  class=&quot;language-coffeescript&quot;&gt;
+    @setState
+      value: event.target.value
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    If the object argument has more props, just continue adding them on new lines. 
+  &lt;/p&gt;
+  &lt;p&gt;
+    Secondly, the remaining &lt;code  class=&quot;language-coffeescript&quot;&gt;children&lt;/code&gt; which are being passed to the method after the initial properties object are distinguished from the object simply by keeping the same indentation as the object, but not having keys. Each child component can the be passed on it's own line, and via indentation, you can place components inside the same parent even if they have complex children - eg. the submit button and label are both direct children of  the form.
+  &lt;/p&gt;
+  &lt;p&gt;
+    The closing tags from JSX, which became closing parenthesis in Javascript can be dropped as they simply aren't required.
+  &lt;/p&gt;
+  &lt;p&gt;
+    I've also left out the &lt;code class=&quot;language-coffeescript&quot;&gt;return&lt;/code&gt; statement, as Coffeescript implicitly returns the last statement in every block.
+    But you will notice one caveat in the above example, which is that we have to pass &lt;code class=&quot;language-coffeescript&quot;&gt;null&lt;/code&gt; to &lt;code class=&quot;language-coffeescript&quot;&gt;label&lt;/code&gt; as it has no properties, but does have a child (the text &lt;code class=&quot;language-coffeescript&quot;&gt;'name'&lt;/code&gt;). Ideally I would like to see React components to accept only a child element (or array) to clean out this one inconsistency.
+  &lt;/p&gt;
+
+  &lt;h3 id=&quot;Binding_context&quot;&gt;&lt;a href=&quot;#Binding_context&quot;&gt;Binding context&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    When dealing with DOM event listeners, we need to remember that &lt;code  class=&quot;language-coffeescript&quot;&gt;this&lt;/code&gt; inside a callback refers to the element which the event was caught on. But in React we usually want it to be the component, as we can access the DOM element via the &lt;code  class=&quot;language-coffeescript&quot;&gt;event&lt;/code&gt; argument. 
+    This is why the &lt;code  class=&quot;language-coffeescript&quot;&gt;handleChange&lt;/code&gt; and &lt;code  class=&quot;language-coffeescript&quot;&gt;handleSubmit&lt;/code&gt; methods have &lt;code  class=&quot;language-coffeescript&quot;&gt;this&lt;/code&gt; binded to them inside the class:
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot;&gt;
+    class NameForm extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    In Coffeescript the &quot;fat arrow&quot; &lt;code class=&quot;language-coffeescript&quot;&gt;=&gt;&lt;/code&gt; automatically binds the context in which the function is defined (eg. the class) to the function's body.
+  &lt;/p&gt;
+
+  &lt;h3 id=&quot;String_interpolation&quot;&gt;&lt;a href=&quot;#String_interpolation&quot;&gt;String interpolation&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    You'll have noticed that while the Javascript used double quotes for its strings, I've been using single quotes in the Coffeescript version. That is because in Coffeescript, double quotes are used for &lt;a href=&quot;http://coffeescript.org/#interpolation&quot;&gt;string interpolation&lt;/a&gt; using the &lt;code class=&quot;language-coffeescript&quot;&gt;#{}&lt;/code&gt; syntax. For example, if you wanted to place a name inside a welcome message, then the Coffeescript would be:
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot;&gt;
+    console.log &quot;Hello #{name} and welcome to Caffeinated.tech!&quot;
+  &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;h3 id=&quot;Putting_it_all_together&quot;&gt;&lt;a href=&quot;#Putting_it_all_together&quot;&gt;Putting it all together&lt;/a&gt;&lt;/h3&gt;    
+  &lt;p&gt;
+    Finally,  we get a complete React Component in Coffeescript:
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot;&gt;
+    class NameForm extends React.Component
+      constructor(props) -&gt;
+        super(props)
+        @state = 
+          value: ''
+
+      handleChange: (event) =&gt;
+        @setState
+          value: event.target.value
+
+      handleSubmit: (event) =&gt;
+        alert &quot;A name was submmited: #{@state.value}&quot;
+        event.preventDefault()
+
+      render: -&gt;
+        form
+          onSubmit: @handleSubmit
+          label null,
+            'name'
+            input
+              type: 'text'
+              value: @state.value
+              onChange: @handleChange
+          input
+            type: 'submit'
+            'Submit'
+  &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;h3 id=&quot;Summary&quot;&gt;&lt;a href=&quot;#Summary&quot;&gt;Summary&lt;/a&gt;&lt;/h3&gt;    
+
+  &lt;p&gt; 
+    Coffeescript is a language true to its roots - exposing the good parts of Javascript. This approach still works with newer libraries with highly specialized libraries like ReactJS. If you want to delve into the ReactJS world, but don't fancy adding another pre-compile step to your coffeescript project, then don't hold back.
+  &lt;/p&gt;
+  &lt;p&gt;
+    While resources for the specific combination of Coffeescript and ReactJS are few and far between, there are some I can recommend. &lt;a href=&quot;https://blog.arkency.com/2015/05/you-can-use-coffeescript-classes-with-react-dot-js-pros-and-cons/&quot; target=&quot;_blank&quot;&gt;Arkency&lt;/a&gt; run a great development blog with many posts on using ReactJS with a Ruby on Rails / Coffeescript project.
+  &lt;/p&gt;
+  &lt;br/&gt;
+  &lt;p&gt;
+    If you have feedback, or would like some more posts on the topic of ReactJS and Coffeescript then &lt;a href=&quot;/contact.html&quot;&gt;let me know&lt;/a&gt;.
+  &lt;/p&gt;
+&lt;/content&gt;</content><author><name></name></author><summary type="html">Coffeescript and React ( without JSX ) Coffeescript Coffeescript is a Javascript superscript (it transpiles to Javascript) similar to TypeScript and ActiveScript. It was written in 09/10 to show off &quot;the good parts&quot; of Javascript. It ships as the default Javascript engine with Ruby on Rails since version 3.1 which has helped make it one of the most popular JavaScript superscript on Github to date. Underneath that awkward Java-esque patina, JavaScript has always had a gorgeous heart. CoffeeScript is an attempt to expose the good parts of JavaScript in a simple way. -- coffeescript.org</summary></entry></feed>

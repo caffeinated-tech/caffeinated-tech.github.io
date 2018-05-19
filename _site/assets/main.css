@@ -85,6 +85,7 @@ header #logo { display: inline-block; margin: auto; margin-top: 20px; text-align
 header #logo img { display: block; margin: auto; width: 100px; }
 header nav { width: 100%; display: flex; justify-content: space-around; max-width: 600px; }
 header nav a { transition: padding 0.5s; display: inline-block; color: white; background-color: red; padding: 3px 40px 5px; }
+header p { text-indent: 0; }
 header hr { width: 100%; max-width: 800px; margin: 20px auto; }
 header .blog { background-color: #004180; }
 header .profile { background-color: #6d006d; }
@@ -107,16 +108,15 @@ footer hr { width: 100%; max-width: 800px; margin: 0 auto; }
 body { padding: 0; margin: 0; font-family: "Fira Code"; background-color: #202020; color: #eee; }
 
 a { text-decoration: none; color: white; font-weight: bold; cursor: pointer; }
-
-a:hover { text-decoration: underline; }
+a:hover { text-decoration: underline; color: white; }
 
 p { color: #adadad; text-indent: 2em; }
 
 html { padding: 0; margin: 0; font-size: 18px; }
 
-h2 { background-color: #004180; display: inline-block; padding: 10px 50px; color: white; }
+h2 { background-color: black; display: inline-block; padding: 10px 50px; color: white; }
 
-h3 { border-bottom: 2px solid #004180; display: inline-block; padding: 10px 50px; color: white; }
+h3 { border-bottom: 2px solid white; display: inline-block; padding: 10px 50px; color: white; }
 
 img { max-width: 100%; }
 

@@ -1,0 +1,142 @@
+@charset "UTF-8";
+@font-face (FiraCode, _fonts/FiraCode-Medium, 500, normal, otf);
+@font-face (FiraCode, _fonts/FiraCode-Bold, 700, normal, otf);
+@font-face (FiraCode, _fonts/FiraCode-Light, 300, normal, otf);
+/* from https://github.com/web-tiki/responsive-grid-of-hexagons 
+*/
+* { margin: 0; padding: 0; }
+
+#hexGrid { display: flex; flex-wrap: wrap; width: 100%; margin: 0 auto; overflow: hidden; font-size: 15px; list-style-type: none; }
+
+.hex { position: relative; visibility: hidden; outline: 1px solid transparent; /* fix for jagged edges in FF on hover transition */ }
+
+.hex::after { content: ''; display: block; padding-bottom: 86.602%; /* =  100 / tan(60) * 1.5 */ }
+
+.hexIn { position: absolute; width: 96%; padding-bottom: 110.851%; /* =  width / sin(60) */ margin: 0 2%; overflow: hidden; visibility: hidden; outline: 1px solid transparent; /* fix for jagged edges in FF on hover transition */ -webkit-transform: rotate3d(0, 0, 1, -60deg) skewY(30deg); -ms-transform: rotate3d(0, 0, 1, -60deg) skewY(30deg); transform: rotate3d(0, 0, 1, -60deg) skewY(30deg); }
+
+.hexIn * { position: absolute; visibility: visible; outline: 1px solid transparent; /* fix for jagged edges in FF on hover transition */ }
+
+.hexLink { display: block; width: 100%; height: 100%; text-align: center; color: #fff; overflow: hidden; -webkit-transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg); -ms-transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg); transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg); }
+
+/*** HEX CONTENT **********************************************************************/
+.hex img { left: -100%; right: -100%; width: auto; height: 100%; margin: 0 auto; -webkit-transform: rotate3d(0, 0, 0, 0deg); -ms-transform: rotate3d(0, 0, 0, 0deg); transform: rotate3d(0, 0, 0, 0deg); }
+
+.hex h1, .hex p { width: 100%; padding: 5%; box-sizing: border-box; background-color: rgba(0, 128, 128, 0.8); font-weight: 300; -webkit-transition: -webkit-transform .2s ease-out, opacity .3s ease-out; transition: transform .2s ease-out, opacity .3s ease-out; }
+
+.hex h1 { bottom: 50%; padding-top: 50%; font-size: 1.5em; z-index: 1; -webkit-transform: translate3d(0, -100%, 0); -ms-transform: translate3d(0, -100%, 0); transform: translate3d(0, -100%, 0); }
+
+.hex h1::after { content: ''; position: absolute; bottom: 0; left: 45%; width: 10%; text-align: center; border-bottom: 1px solid #fff; }
+
+.hex p { top: 50%; padding-bottom: 50%; -webkit-transform: translate3d(0, 100%, 0); -ms-transform: translate3d(0, 100%, 0); transform: translate3d(0, 100%, 0); }
+
+/*** HOVER EFFECT  **********************************************************************/
+.hexLink:hover h1, .hexLink:focus h1, .hexLink:hover p, .hexLink:focus p { -webkit-transform: translate3d(0, 0, 0); -ms-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+
+/*** HEXAGON SIZING AND EVEN ROW INDENTATION *****************************************************************/
+@media (min-width: 601px) { /* <- 8-7  hexagons per row */
+  #hexGrid { padding-bottom: 4.4%; }
+  .hex { width: 12.5%; /* = 100 / 8 */ }
+  .hex:nth-child(15n+9) { /* first hexagon of even rows */ margin-left: 6.25%; /* = width of .hex / 2  to indent even rows */ } }
+@media (max-width: 600px) { /* <- 5-4  hexagons per row */
+  #hexGrid { padding-bottom: 5.5%; }
+  .hex { width: 20%; /* = 100 / 5 */ }
+  .hex:nth-child(9n+6) { /* first hexagon of even rows */ margin-left: 10%; /* = width of .hex / 2  to indent even rows */ } }
+/* PrismJS 1.14.0
+http://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+csharp+coffeescript+ruby+go+json+markdown+sql+sass+scss */
+/** okaidia theme for JavaScript, CSS and HTML Loosely based on Monokai textmate theme by http://www.monokai.nl/ @author ocodia */
+code[class*="language-"], pre[class*="language-"] { color: #f8f8f2; background: none; text-shadow: 0 1px rgba(0, 0, 0, 0.3); font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; word-wrap: normal; line-height: 1.5; -moz-tab-size: 4; -o-tab-size: 4; tab-size: 4; -webkit-hyphens: none; -moz-hyphens: none; -ms-hyphens: none; hyphens: none; }
+
+/* Code blocks */
+pre[class*="language-"] { padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0.3em; }
+
+:not(pre) > code[class*="language-"], pre[class*="language-"] { background: #272822; }
+
+/* Inline code */
+:not(pre) > code[class*="language-"] { padding: .1em; border-radius: .3em; white-space: normal; }
+
+.token.comment, .token.prolog, .token.doctype, .token.cdata { color: slategray; }
+
+.token.punctuation { color: #f8f8f2; }
+
+.namespace { opacity: .7; }
+
+.token.property, .token.tag, .token.constant, .token.symbol, .token.deleted { color: #f92672; }
+
+.token.boolean, .token.number { color: #ae81ff; }
+
+.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted { color: #a6e22e; }
+
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string, .token.variable { color: #f8f8f2; }
+
+.token.atrule, .token.attr-value, .token.function { color: #e6db74; }
+
+.token.keyword { color: #66d9ef; }
+
+.token.regex, .token.important { color: #fd971f; }
+
+.token.important, .token.bold { font-weight: bold; }
+
+.token.italic { font-style: italic; }
+
+.token.entity { cursor: help; }
+
+header { display: flex; justify-content: center; align-items: center; flex-direction: column; }
+header #logo { display: inline-block; margin: auto; margin-top: 20px; text-align: center; color: white; }
+header #logo img { display: block; margin: auto; width: 100px; }
+header nav { width: 100%; display: flex; justify-content: space-around; max-width: 600px; }
+header nav a { transition: padding 0.5s; display: inline-block; color: white; background-color: red; padding: 3px 40px 5px; }
+header hr { width: 100%; max-width: 800px; margin: 20px auto; }
+header .blog { background-color: #004180; }
+header .profile { background-color: #6d006d; }
+header .contact { background-color: #006f00; }
+@media only screen and (max-width: 420px) { header nav a { padding: 3px 10px 5px; } }
+
+footer { display: flex; justify-content: center; flex-direction: column; margin: 50px 0; }
+footer p { margin: 0 auto; color: white; }
+footer hr { width: 100%; max-width: 800px; margin: 0 auto; }
+
+#blog h2 { background-color: #004180; }
+#blog h3 { border-bottom-color: #004180; }
+
+#profile h2 { background-color: #6d006d; }
+#profile h3 { border-bottom-color: #6d006d; }
+
+#contact h2 { background-color: #006f00; }
+#contact h3 { border-bottom-color: #006f00; }
+
+body { padding: 0; margin: 0; font-family: "Fira Code"; background-color: #202020; color: #eee; }
+
+a { text-decoration: none; color: white; font-weight: bold; cursor: pointer; }
+
+a:hover { text-decoration: underline; }
+
+p { color: #adadad; text-indent: 2em; }
+
+html { padding: 0; margin: 0; font-size: 18px; }
+
+h2 { background-color: #004180; display: inline-block; padding: 10px 50px; color: white; }
+
+h3 { border-bottom: 2px solid #004180; display: inline-block; padding: 10px 50px; color: white; }
+
+img { max-width: 100%; }
+
+content { display: flex; justify-content: flex-start; flex-direction: column; padding: 0 50px; max-width: 1550px; margin: 0 auto; }
+
+blockquote { border-top: none; position: relative; color: #eee; font-style: italic; margin-bottom: 3em; padding: 0.5em 10px 0.5em 45px; quotes: "“" "”" "‘" "’"; }
+
+blockquote:before { position: absolute; left: 0; color: white; content: open-quote; font-size: 4em; }
+
+blockquote:after { position: absolute; right: 0; color: white; content: close-quote; font-size: 4em; }
+
+blockquote a { position: absolute; right: 25px; bottom: 0; }
+
+pre[class*="language-"] { background: #2a2a2a !important; }
+
+code { border: 1px solid #777; }
+
+pre code { border: none; }
+
+aside { border: 1px solid #777; color: #ccc; padding: 5px; }
+
+@media only screen and (max-width: 420px) { html { /*font-size:16px;*/ }
+  content { padding: 0 10px; } }

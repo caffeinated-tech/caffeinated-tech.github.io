@@ -7,3 +7,6 @@ My blog
 - add in atlantec post
 - add in bson id post
 
+- add contact section
+- add profile section
+

@@ -30,6 +30,10 @@ $content-width:    800px !default;
 @import 'profile';
 @import 'contact';
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   padding:0;
   margin: 0;
@@ -62,13 +66,16 @@ h2 {
   display: inline-block;
   padding: 10px 50px;
   color: white;
+  width:100%;
+  margin: 10px 0 40px;
 }
 h3 {
   border-bottom: 2px solid white;
   display: inline-block;
   padding: 10px 50px;
-
+  width:100%;
   color: white;
+  margin: 10px 0 20px;
 }
 img {
   max-width:100%;
@@ -77,40 +84,54 @@ content {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 0 50px;
-  max-width:1550px;
   margin:0 auto;
 }
 
+a.post-excerpt {
+  display:block;
+  padding: 10px 20px;
+  margin: 30px 0;
+  font-weight:normal;
+  &:hover {
+    text-decoration:none;
+    background-color: rgba(255,255,255,0.1)
+  }
+  .post-date {
+    display:inline-block;
+  }
+}
 
 blockquote {
   border-top: none;
   position: relative;
   color: #eee;
   font-style: italic;
-  margin-bottom: 3em;
+  margin: 30px;
   padding: 0.5em 10px 0.5em 45px;
   quotes: "“" "”" "‘" "’";
-}
-blockquote:before {
-  position: absolute;
-  left: 0;
-  color: white;
-  content: open-quote;
-  font-size: 4em;
-}
-blockquote:after {
-  position: absolute;
-  right: 0;
-  color: white;
-  content: close-quote;
-  font-size: 4em;
-}
-blockquote a {
-
-  position: absolute;
-  right: 25px;
-  bottom: 0;
+  &:before {
+    position: absolute;
+    left: 0;
+    top: -12px;
+    color: white;
+    content: open-quote;
+    line-height: 1em;
+    font-size: 4em;
+  }
+  &:after {
+    position: absolute;
+    right: 0;
+    bottom:-0.7em;
+    color: white;
+    content: close-quote;
+    line-height: 1em;
+    font-size: 4em;
+  }
+  a {
+    position: absolute;
+    right: 40px;
+    bottom: 0;
+  }
 }
 
 pre[class*="language-"] {

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Sorting by date in MongoDB | caffeinated.tech</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Sorting by date in MongoDB" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="TODO: add blurb" />
+<meta property="og:description" content="TODO: add blurb" />
+<link rel="canonical" href="http://localhost:4000/2018/05/19/sort-by-date-mongodb.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/19/sort-by-date-mongodb.html" />
+<meta property="og:site_name" content="caffeinated.tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-19T18:11:36+01:00" />
+<script type="application/ld+json">
+{"dateModified":"2018-05-19T18:11:36+01:00","datePublished":"2018-05-19T18:11:36+01:00","url":"http://localhost:4000/2018/05/19/sort-by-date-mongodb.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/19/sort-by-date-mongodb.html"},"headline":"Sorting by date in MongoDB","description":"TODO: add blurb","@type":"BlogPosting","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="caffeinated.tech" /><link 
+    rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+    crossorigin="anonymous">
+  <link 
+    rel="stylesheet" 
+    type="text/css" 
+    href="/assets/main.css">
+</head>
+<body><header>
+  <a id="logo" href="/index.html">
+    <img src="/images/ct-logo-outline.png">
+    <h1>caffeinated.tech</h1>
+    <p>A tech blog by a coffee addled programmer</p>
+  </a>
+  <br>
+  <nav>
+    <a class="blog" href="/blog">blog</a>
+    <a class="profile" href="/profile">profile</a>
+    <a class="contact" href="/contact">contact</a>
+  </nav>
+  <hr>
+</header>
+<main class="page-content" aria-label="Content">
+      <content class="container">
+        <div id="blog">
+  <h2>
+    Sorting by date in MongoDB
+  </h2>
+
+  <p>
+  TODO: add blurb
+</p>
+
+
+<!--end_excerpt-->
+<h3 id="indexes">Indexes</h3>
+<p>When designing a <a href="https://docs.mongodb.com/manual/introduction/">MongoDB</a> database for your application, you need to consider how it will scale. One limiting factor is how you index you collections. <a href="https://docs.mongodb.com/manual/indexes/">Indexes</a> allow for fast and efficient sorting and searching of documents in your collection by the indexed fields. This is possible because the fields are kept sorted in memory at all times.</p>
+<p>It is easy to see the limitation of this approach - once you have too many indexes, and they don't fit into your server's physical memory, then the least used indexes will be shunted into the page file / swap partition. When these indexes are then accessed, a painfully slow fetch time is experienced as the indexes are retrieved from the disk to be used.</p>
+<p>You can't keep buying more RAM, and will eventually reach the upper limit of your server configuration. Therefore it is imperative that you analyse your users' workflow and index those fields which they are going to sort and search data via most frequently.</p>
+<h3 id="dates">Dates</h3>
+<p>One of the most common fields to query by is the timestamp, often named <code class="hljs">created_at</code> in MongoDB. This is an 8 byte integer, meaning that while it will only take up 8 Mb per million documents in a collection, it will likely be used in almost every collection in your Database.</p>
+<p>You can easily save the 8 bytes per document by utilizing the BSON ObjectId.</p>
+<h3 id="bsonobjectid">BSON Object Id</h3>
+<p>BSON (Binary JSON) is the format in which data is stored in MongoDB. Every document in MongoDB is given a BSON Object Id as a unique identifier. They are 24 byte hexadecimal strings (you can even see one in the url of this post) This id has to always be indexed to allow for fast retrieval of a specific document. The ids follow a strict format: </p>
+<p><img src="/images/bson_id.png" alt="The anatomy of a BSON Object Id"></p>
+<p>So the first four bytes of the id are the unix timestamp at the moment in which the document was first persisted to the database. This means the id can be used to sort documents by their creation date! Say for example I want to find the first post I wrote:</p>
+<pre><code class="hljs css"> <span class="hljs-selector-tag">db</span><span class="hljs-selector-class">.posts</span><span class="hljs-selector-class">.find</span>()<span class="hljs-selector-class">.sort</span>(_<span class="hljs-selector-tag">id</span>: 1)<span class="hljs-selector-class">.limit</span>(1)
+</code></pre>
+<p>Here is a <a href="https://docs.mongodb.com/manual/reference/mongo-shell/#queries">quick refresher</a> on the mongo query syntax. If you wanted the most recent (ie. descending order) then it would be <code class="hljs http"><span class="hljs-attribute">sort(_id</span>: -1)</code>.</p>
+<p>Similiarly in <a href="https://www.ruby-lang.org/en/">ruby</a> using the Mongoid ORM (Object Relational Mapper) gem, it would be:</p>
+<pre><code class="hljs css"><span class="hljs-selector-tag">Posts</span><span class="hljs-selector-class">.all</span><span class="hljs-selector-class">.order_by</span>(_<span class="hljs-selector-tag">id</span>: 1)<span class="hljs-selector-class">.first</span>
+</code></pre>
+<p>If you wanted to extract the timestamp from a document, you could add this function to your model definition:</p>
+<pre><code class="hljs ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">created_at</span></span>
+  <span class="hljs-comment"># convert the BSON::ObjectId to a hex string </span>
+  hex_id = <span class="hljs-keyword">self</span>._id.to_s
+  <span class="hljs-comment"># take only the first 8 bytes which correspond to the time  </span>
+  hex_timestamp = hex_string_id[<span class="hljs-number">0</span>..<span class="hljs-number">7</span>]
+  <span class="hljs-comment"># convert the hex string (base 16) to an integer </span>
+  timestamp_integer = hex_timestamp.to_i(<span class="hljs-number">16</span>)
+  <span class="hljs-comment"># convert the unix timestamp in seconds to a time object </span>
+  <span class="hljs-comment">#   (which is implicitly returned)</span>
+  timestamp = Time.at(timestamp_integer)
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>Which can be condensed to:</p>
+<pre><code class="hljs css"><span class="hljs-selector-tag">def</span> <span class="hljs-selector-tag">created_at</span>
+  <span class="hljs-selector-tag">Time</span><span class="hljs-selector-class">.at</span> <span class="hljs-selector-tag">self</span><span class="hljs-selector-class">.id</span><span class="hljs-selector-class">.to_s</span><span class="hljs-selector-attr">[0..7]</span><span class="hljs-selector-class">.to_i</span>(16)
+<span class="hljs-selector-tag">end</span>
+</code></pre>
+<h3 id="sources">Sources</h3>
+<ul>
+<li><a href="https://www.mongodb.com"> MongoDB introduction - mongodb.com</a></li>
+<li><a href="https://docs.mongodb.com/manual/indexes">MongoDB Indexes - mongodb.com</a></li>
+<li><a href="https://docs.mongodb.com/manual/reference/mongo-shell/#queries">MongoDB query syntax - mongodb.com</a></li>
+<li><a href="https://www.ruby-lang.org/en/">Ruby - ruby-lang.org</a></li>
+<li><a href="https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial">Mongoid gem documentation - mongodb.com</a>h</li>
+</ul>
+
+</div>
+
+      </content>
+    </main><footer>
+  <hr>
+  <br>
+  <p>
+    Created with ☕ by Liam Krewer
+  </p>
+</footer>
+<div>
+  <script 
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+    crossorigin="anonymous"></script>
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+    crossorigin="anonymous"></script>
+  <script 
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+    crossorigin="anonymous"></script>
+  <script 
+    type="text/javascript" 
+    src="/assets/prism.js"></script>
+</div>
+</body>
+
+</html>

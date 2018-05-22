@@ -41,6 +41,22 @@
   #hexGrid { padding-bottom: 5.5%; }
   .hex { width: 20%; /* = 100 / 5 */ }
   .hex:nth-child(9n+6) { /* first hexagon of even rows */ margin-left: 10%; /* = width of .hex / 2  to indent even rows */ } }
+.hex.twitter .hexLink { background-color: #55acee; }
+
+.hex.googleplus .hexLink { background-color: #dc4a38; }
+
+.hex.facebook .hexLink { background-color: #295396; }
+
+.hex.linkedin .hexLink { background-color: #0083be; }
+
+.hex.stackoverflow .hexLink { background-color: #ffa500; }
+
+.hex.codepen .hexLink { background-color: #000000; }
+
+.hex.meetup .hexLink { background-color: #ed0f1c; }
+
+.hex.github .hexLink { background-color: #000000; }
+
 /* PrismJS 1.14.0
 http://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript+bash+csharp+coffeescript+ruby+go+json+markdown+sql+sass+scss */
 /** okaidia theme for JavaScript, CSS and HTML Loosely based on Monokai textmate theme by http://www.monokai.nl/ @author ocodia */
@@ -105,6 +121,8 @@ footer hr { width: 100%; max-width: 800px; margin: 0 auto; }
 #contact h2 { background-color: #006f00; }
 #contact h3 { border-bottom-color: #006f00; }
 
+* { box-sizing: border-box; }
+
 body { padding: 0; margin: 0; font-family: "Fira Code"; background-color: #202020; color: #eee; }
 
 a { text-decoration: none; color: white; font-weight: bold; cursor: pointer; }
@@ -114,21 +132,22 @@ p { color: #adadad; text-indent: 2em; }
 
 html { padding: 0; margin: 0; font-size: 18px; }
 
-h2 { background-color: black; display: inline-block; padding: 10px 50px; color: white; }
+h2 { background-color: black; display: inline-block; padding: 10px 50px; color: white; width: 100%; margin: 10px 0 40px; }
 
-h3 { border-bottom: 2px solid white; display: inline-block; padding: 10px 50px; color: white; }
+h3 { border-bottom: 2px solid white; display: inline-block; padding: 10px 50px; width: 100%; color: white; margin: 10px 0 20px; }
 
 img { max-width: 100%; }
 
-content { display: flex; justify-content: flex-start; flex-direction: column; padding: 0 50px; max-width: 1550px; margin: 0 auto; }
+content { display: flex; justify-content: flex-start; flex-direction: column; margin: 0 auto; }
 
-blockquote { border-top: none; position: relative; color: #eee; font-style: italic; margin-bottom: 3em; padding: 0.5em 10px 0.5em 45px; quotes: "“" "”" "‘" "’"; }
+a.post-excerpt { display: block; padding: 10px 20px; margin: 30px 0; font-weight: normal; }
+a.post-excerpt:hover { text-decoration: none; background-color: rgba(255, 255, 255, 0.1); }
+a.post-excerpt .post-date { display: inline-block; }
 
-blockquote:before { position: absolute; left: 0; color: white; content: open-quote; font-size: 4em; }
-
-blockquote:after { position: absolute; right: 0; color: white; content: close-quote; font-size: 4em; }
-
-blockquote a { position: absolute; right: 25px; bottom: 0; }
+blockquote { border-top: none; position: relative; color: #eee; font-style: italic; margin: 30px; padding: 0.5em 10px 0.5em 45px; quotes: "“" "”" "‘" "’"; }
+blockquote:before { position: absolute; left: 0; top: -12px; color: white; content: open-quote; line-height: 1em; font-size: 4em; }
+blockquote:after { position: absolute; right: 0; bottom: -0.7em; color: white; content: close-quote; line-height: 1em; font-size: 4em; }
+blockquote a { position: absolute; right: 40px; bottom: 0; }
 
 pre[class*="language-"] { background: #2a2a2a !important; }
 

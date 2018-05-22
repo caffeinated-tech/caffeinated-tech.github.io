@@ -134,3 +134,37 @@
     margin-left:10%;  /* = width of .hex / 2  to indent even rows */
   }
 }
+
+
+// customization for images which are the wrong size
+.hex.twitter .hexLink {
+  background-color: #55acee;
+}
+
+.hex.googleplus .hexLink {
+  background-color: #dc4a38;
+}
+
+.hex.facebook .hexLink {
+  background-color: #295396;
+}
+
+.hex.linkedin .hexLink {
+  background-color: #0083be;
+}
+
+.hex.stackoverflow .hexLink {
+  background-color: #ffa500;
+}
+
+.hex.codepen .hexLink {
+  background-color: #000000;
+}
+
+.hex.meetup .hexLink {
+  background-color: #ed0f1c;
+}
+
+.hex.github .hexLink {
+  background-color: #000000;
+}

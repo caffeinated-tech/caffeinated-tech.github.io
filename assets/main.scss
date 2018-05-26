@@ -18,9 +18,9 @@ $background-color: #202020 !default;
 $blog-color: #004180 !default;
 $blog-color-light: #0073e2 !default;
 $profile-color: #6d006d !default;
-$profile-color-light: #ce00ce !default;
+$profile-color-light: #d800d8 !default;
 $contact-color: #006f00 !default;
-$contact-color-light: #00c100 !default;
+$contact-color-light: #00ab00 !default;
 
 // Width of the content area
 $content-width:    800px !default;
@@ -65,13 +65,16 @@ html {
   margin: 0;
   font-size:18px;
 }
+h1 {
+  margin: 50px 0 10px;
+}
 h2 {
   background-color: black;
   display: inline-block;
   padding: 10px 50px;
   color: white;
   width:100%;
-  margin: 10px 0 40px;
+  margin: 40px 0 10px;
 }
 h3 {
   border-bottom: 2px solid white;
@@ -79,7 +82,7 @@ h3 {
   padding: 10px 50px;
   width:100%;
   color: white;
-  margin: 10px 0 20px;
+  margin: 30px 0 10px;
 }
 img {
   max-width:100%;

@@ -108,18 +108,21 @@ header .profile { background-color: #6d006d; }
 header .contact { background-color: #006f00; }
 @media only screen and (max-width: 420px) { header nav a { padding: 3px 10px 5px; } }
 
-footer { display: flex; justify-content: center; flex-direction: column; margin: 50px 0; }
+footer { display: flex; justify-content: center; flex-direction: column; margin: 100px 0 50px; }
 footer p { margin: 0 auto; color: white; }
-footer hr { width: 100%; max-width: 800px; margin: 0 auto; }
+footer hr { width: 100%; max-width: 800px; margin: 0 auto; border-bottom: 2px solid #eee; }
 
 #blog h2 { background-color: #004180; }
 #blog h3 { border-bottom-color: #004180; }
+#blog a { color: #0073e2; }
 
 #profile h2 { background-color: #6d006d; }
 #profile h3 { border-bottom-color: #6d006d; }
+#profile a { color: #ce00ce; }
 
 #contact h2 { background-color: #006f00; }
 #contact h3 { border-bottom-color: #006f00; }
+#contact a { color: #00c100; }
 
 * { box-sizing: border-box; }
 
@@ -159,3 +162,4 @@ aside { border: 1px solid #777; color: #ccc; padding: 5px; }
 
 @media only screen and (max-width: 420px) { html { /*font-size:16px;*/ }
   content { padding: 0 10px; } }
+.jumbotron { background-color: #373737; color: white; }

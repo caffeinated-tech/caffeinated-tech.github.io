@@ -1,0 +1,12 @@
+<a href="{{ post.url }}" class="post-excerpt">
+  <strong class="post-date">
+    {{ post.date | date: "%B %e, %Y" }}
+  </strong>
+  <br/>
+  <h2>
+    {{ post.title }}
+  </h2>
+  <p>
+    {{ post.excerpt | strip_html  }}...
+  </p>
+</a>

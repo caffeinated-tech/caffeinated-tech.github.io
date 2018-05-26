@@ -1,28 +1,30 @@
 ---
+title: Home
+permalink: index.html
 layout: default
 ---
 
-<content class="home">
-  {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
-    <ul class="post-list">
-      {%- for post in site.posts -%}
-      <li>
-        {%- assign date_format = site.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
-        <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
-        </h3>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
-        {%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
+<div id="home">
 
-    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
-  {%- endif -%}
+  <div class="jumbotron">
+    <h1 class="display-4">Hello, world!</h1>
+    <p>
+      It uses utility classes for typography and spacing to space content out within the larger container.
+    </p>
+  </div>
+  <br>
+  <br>  
+  <h1>
+    Latest Post
+  </h1>
 
-</content>
+  <div id="blog">
+    {% assign post = site.posts[0] %}
+    {%- include post_excerpt.html -%}
+  </div>
+
+  <p>
+    Have a look at <span id="blog"><a href="/blog" >my other blog posts</a></span>, find out more about me on <span id="profile"><a href="/profile"> my profile</a></span> or get in <span id="contact"><a href="/contact"> contact</a></span>.
+  </p>
+
+</div>

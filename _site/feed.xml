@@ -1,52 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-22T23:54:04+01:00</updated><id>http://localhost:4000/</id><title type="html">caffeinated.tech</title><subtitle>A tech blog on web development, server administration and assorted electronics</subtitle><entry><title type="html">Sorting by date in MongoDB</title><link href="http://localhost:4000/2018/05/19/sort-by-date-mongodb.html" rel="alternate" type="text/html" title="Sorting by date in MongoDB" /><published>2018-05-19T18:11:36+01:00</published><updated>2018-05-19T18:11:36+01:00</updated><id>http://localhost:4000/2018/05/19/sort-by-date-mongodb</id><content type="html" xml:base="http://localhost:4000/2018/05/19/sort-by-date-mongodb.html">&lt;p&gt;
-  TODO: add blurb
-&lt;/p&gt;
-
-
-&lt;!--end_excerpt--&gt;
-&lt;h3 id=&quot;indexes&quot;&gt;Indexes&lt;/h3&gt;
-&lt;p&gt;When designing a &lt;a href=&quot;https://docs.mongodb.com/manual/introduction/&quot;&gt;MongoDB&lt;/a&gt; database for your application, you need to consider how it will scale. One limiting factor is how you index you collections. &lt;a href=&quot;https://docs.mongodb.com/manual/indexes/&quot;&gt;Indexes&lt;/a&gt; allow for fast and efficient sorting and searching of documents in your collection by the indexed fields. This is possible because the fields are kept sorted in memory at all times.&lt;/p&gt;
-&lt;p&gt;It is easy to see the limitation of this approach - once you have too many indexes, and they don't fit into your server's physical memory, then the least used indexes will be shunted into the page file / swap partition. When these indexes are then accessed, a painfully slow fetch time is experienced as the indexes are retrieved from the disk to be used.&lt;/p&gt;
-&lt;p&gt;You can't keep buying more RAM, and will eventually reach the upper limit of your server configuration. Therefore it is imperative that you analyse your users' workflow and index those fields which they are going to sort and search data via most frequently.&lt;/p&gt;
-&lt;h3 id=&quot;dates&quot;&gt;Dates&lt;/h3&gt;
-&lt;p&gt;One of the most common fields to query by is the timestamp, often named &lt;code class=&quot;hljs&quot;&gt;created_at&lt;/code&gt; in MongoDB. This is an 8 byte integer, meaning that while it will only take up 8 Mb per million documents in a collection, it will likely be used in almost every collection in your Database.&lt;/p&gt;
-&lt;p&gt;You can easily save the 8 bytes per document by utilizing the BSON ObjectId.&lt;/p&gt;
-&lt;h3 id=&quot;bsonobjectid&quot;&gt;BSON Object Id&lt;/h3&gt;
-&lt;p&gt;BSON (Binary JSON) is the format in which data is stored in MongoDB. Every document in MongoDB is given a BSON Object Id as a unique identifier. They are 24 byte hexadecimal strings (you can even see one in the url of this post) This id has to always be indexed to allow for fast retrieval of a specific document. The ids follow a strict format: &lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/bson_id.png&quot; alt=&quot;The anatomy of a BSON Object Id&quot;&gt;&lt;/p&gt;
-&lt;p&gt;So the first four bytes of the id are the unix timestamp at the moment in which the document was first persisted to the database. This means the id can be used to sort documents by their creation date! Say for example I want to find the first post I wrote:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;hljs css&quot;&gt; &lt;span class=&quot;hljs-selector-tag&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.posts&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.find&lt;/span&gt;()&lt;span class=&quot;hljs-selector-class&quot;&gt;.sort&lt;/span&gt;(_&lt;span class=&quot;hljs-selector-tag&quot;&gt;id&lt;/span&gt;: 1)&lt;span class=&quot;hljs-selector-class&quot;&gt;.limit&lt;/span&gt;(1)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here is a &lt;a href=&quot;https://docs.mongodb.com/manual/reference/mongo-shell/#queries&quot;&gt;quick refresher&lt;/a&gt; on the mongo query syntax. If you wanted the most recent (ie. descending order) then it would be &lt;code class=&quot;hljs http&quot;&gt;&lt;span class=&quot;hljs-attribute&quot;&gt;sort(_id&lt;/span&gt;: -1)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Similiarly in &lt;a href=&quot;https://www.ruby-lang.org/en/&quot;&gt;ruby&lt;/a&gt; using the Mongoid ORM (Object Relational Mapper) gem, it would be:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;hljs css&quot;&gt;&lt;span class=&quot;hljs-selector-tag&quot;&gt;Posts&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.all&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.order_by&lt;/span&gt;(_&lt;span class=&quot;hljs-selector-tag&quot;&gt;id&lt;/span&gt;: 1)&lt;span class=&quot;hljs-selector-class&quot;&gt;.first&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you wanted to extract the timestamp from a document, you could add this function to your model definition:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;hljs ruby&quot;&gt;&lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;created_at&lt;/span&gt;&lt;/span&gt;
-  &lt;span class=&quot;hljs-comment&quot;&gt;# convert the BSON::ObjectId to a hex string &lt;/span&gt;
-  hex_id = &lt;span class=&quot;hljs-keyword&quot;&gt;self&lt;/span&gt;._id.to_s
-  &lt;span class=&quot;hljs-comment&quot;&gt;# take only the first 8 bytes which correspond to the time  &lt;/span&gt;
-  hex_timestamp = hex_string_id[&lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;..&lt;span class=&quot;hljs-number&quot;&gt;7&lt;/span&gt;]
-  &lt;span class=&quot;hljs-comment&quot;&gt;# convert the hex string (base 16) to an integer &lt;/span&gt;
-  timestamp_integer = hex_timestamp.to_i(&lt;span class=&quot;hljs-number&quot;&gt;16&lt;/span&gt;)
-  &lt;span class=&quot;hljs-comment&quot;&gt;# convert the unix timestamp in seconds to a time object &lt;/span&gt;
-  &lt;span class=&quot;hljs-comment&quot;&gt;#   (which is implicitly returned)&lt;/span&gt;
-  timestamp = Time.at(timestamp_integer)
-&lt;span class=&quot;hljs-keyword&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which can be condensed to:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;hljs css&quot;&gt;&lt;span class=&quot;hljs-selector-tag&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;hljs-selector-tag&quot;&gt;created_at&lt;/span&gt;
-  &lt;span class=&quot;hljs-selector-tag&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.at&lt;/span&gt; &lt;span class=&quot;hljs-selector-tag&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.id&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.to_s&lt;/span&gt;&lt;span class=&quot;hljs-selector-attr&quot;&gt;[0..7]&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.to_i&lt;/span&gt;(16)
-&lt;span class=&quot;hljs-selector-tag&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;sources&quot;&gt;Sources&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.mongodb.com&quot;&gt; MongoDB introduction - mongodb.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.mongodb.com/manual/indexes&quot;&gt;MongoDB Indexes - mongodb.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.mongodb.com/manual/reference/mongo-shell/#queries&quot;&gt;MongoDB query syntax - mongodb.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.ruby-lang.org/en/&quot;&gt;Ruby - ruby-lang.org&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial&quot;&gt;Mongoid gem documentation - mongodb.com&lt;/a&gt;h&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="MongoDB" /><category term="indexing" /><category term="sorting" /><category term="date" /><category term="bson" /><category term="objectid" /><summary type="html">TODO: add blurb</summary></entry><entry><title type="html">React and Coffeescript (without JSX)</title><link href="http://localhost:4000/2018/05/19/react-and-coffeescript.html" rel="alternate" type="text/html" title="React and Coffeescript (without JSX)" /><published>2018-05-19T18:11:36+01:00</published><updated>2018-05-19T18:11:36+01:00</updated><id>http://localhost:4000/2018/05/19/react-and-coffeescript</id><content type="html" xml:base="http://localhost:4000/2018/05/19/react-and-coffeescript.html">&lt;p&gt;   
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-05-26T16:05:00+01:00</updated><id>http://localhost:4000/</id><title type="html">caffeinated.tech</title><subtitle>A tech blog on web development, server administration and assorted electronics</subtitle><entry><title type="html">React and Coffeescript (without JSX)</title><link href="http://localhost:4000/2017/09/07/react-and-coffeescript.html" rel="alternate" type="text/html" title="React and Coffeescript (without JSX)" /><published>2017-09-07T22:02:32+01:00</published><updated>2017-09-07T22:02:32+01:00</updated><id>http://localhost:4000/2017/09/07/react-and-coffeescript</id><content type="html" xml:base="http://localhost:4000/2017/09/07/react-and-coffeescript.html">&lt;p&gt;   
   ReactJS is taking the web by storm. Annoyingly it comes with another Javascript preprocessor - JSX. If you are already in a coffeescript environment, then you can give React a try without needing to learn JSX or adding it to your toolchain.
 &lt;/p&gt;
 
@@ -277,7 +229,55 @@
 &lt;br/&gt;
 &lt;p&gt;
   If you have feedback, or would like some more posts on the topic of ReactJS and Coffeescript then &lt;a href=&quot;/contact.html&quot;&gt;let me know&lt;/a&gt;.
-&lt;/p&gt;</content><author><name></name></author><category term="react" /><category term="coffeescript" /><category term="jsx" /><summary type="html">ReactJS is taking the web by storm. Annoyingly it comes with another Javascript preprocessor - JSX. If you are already in a coffeescript environment, then you can give React a try without needing to learn JSX or adding it to your toolchain.</summary></entry><entry><title type="html">Atlantec 2017</title><link href="http://localhost:4000/2018/05/19/atlantec-2017.html" rel="alternate" type="text/html" title="Atlantec 2017" /><published>2018-05-19T18:11:36+01:00</published><updated>2018-05-19T18:11:36+01:00</updated><id>http://localhost:4000/2018/05/19/atlantec-2017</id><content type="html" xml:base="http://localhost:4000/2018/05/19/atlantec-2017.html">&lt;p&gt;
+&lt;/p&gt;</content><author><name></name></author><category term="react" /><category term="coffeescript" /><category term="jsx" /><summary type="html">ReactJS is taking the web by storm. Annoyingly it comes with another Javascript preprocessor - JSX. If you are already in a coffeescript environment, then you can give React a try without needing to learn JSX or adding it to your toolchain.</summary></entry><entry><title type="html">Sorting by date in MongoDB</title><link href="http://localhost:4000/2017/08/01/sort-by-date-mongodb.html" rel="alternate" type="text/html" title="Sorting by date in MongoDB" /><published>2017-08-01T21:23:04+01:00</published><updated>2017-08-01T21:23:04+01:00</updated><id>http://localhost:4000/2017/08/01/sort-by-date-mongodb</id><content type="html" xml:base="http://localhost:4000/2017/08/01/sort-by-date-mongodb.html">&lt;p&gt;
+  TODO: add blurb
+&lt;/p&gt;
+
+
+&lt;!--end_excerpt--&gt;
+&lt;h3 id=&quot;indexes&quot;&gt;Indexes&lt;/h3&gt;
+&lt;p&gt;When designing a &lt;a href=&quot;https://docs.mongodb.com/manual/introduction/&quot;&gt;MongoDB&lt;/a&gt; database for your application, you need to consider how it will scale. One limiting factor is how you index you collections. &lt;a href=&quot;https://docs.mongodb.com/manual/indexes/&quot;&gt;Indexes&lt;/a&gt; allow for fast and efficient sorting and searching of documents in your collection by the indexed fields. This is possible because the fields are kept sorted in memory at all times.&lt;/p&gt;
+&lt;p&gt;It is easy to see the limitation of this approach - once you have too many indexes, and they don't fit into your server's physical memory, then the least used indexes will be shunted into the page file / swap partition. When these indexes are then accessed, a painfully slow fetch time is experienced as the indexes are retrieved from the disk to be used.&lt;/p&gt;
+&lt;p&gt;You can't keep buying more RAM, and will eventually reach the upper limit of your server configuration. Therefore it is imperative that you analyse your users' workflow and index those fields which they are going to sort and search data via most frequently.&lt;/p&gt;
+&lt;h3 id=&quot;dates&quot;&gt;Dates&lt;/h3&gt;
+&lt;p&gt;One of the most common fields to query by is the timestamp, often named &lt;code class=&quot;hljs&quot;&gt;created_at&lt;/code&gt; in MongoDB. This is an 8 byte integer, meaning that while it will only take up 8 Mb per million documents in a collection, it will likely be used in almost every collection in your Database.&lt;/p&gt;
+&lt;p&gt;You can easily save the 8 bytes per document by utilizing the BSON ObjectId.&lt;/p&gt;
+&lt;h3 id=&quot;bsonobjectid&quot;&gt;BSON Object Id&lt;/h3&gt;
+&lt;p&gt;BSON (Binary JSON) is the format in which data is stored in MongoDB. Every document in MongoDB is given a BSON Object Id as a unique identifier. They are 24 byte hexadecimal strings (you can even see one in the url of this post) This id has to always be indexed to allow for fast retrieval of a specific document. The ids follow a strict format: &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/bson_id.png&quot; alt=&quot;The anatomy of a BSON Object Id&quot;&gt;&lt;/p&gt;
+&lt;p&gt;So the first four bytes of the id are the unix timestamp at the moment in which the document was first persisted to the database. This means the id can be used to sort documents by their creation date! Say for example I want to find the first post I wrote:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs css&quot;&gt; &lt;span class=&quot;hljs-selector-tag&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.posts&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.find&lt;/span&gt;()&lt;span class=&quot;hljs-selector-class&quot;&gt;.sort&lt;/span&gt;(_&lt;span class=&quot;hljs-selector-tag&quot;&gt;id&lt;/span&gt;: 1)&lt;span class=&quot;hljs-selector-class&quot;&gt;.limit&lt;/span&gt;(1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is a &lt;a href=&quot;https://docs.mongodb.com/manual/reference/mongo-shell/#queries&quot;&gt;quick refresher&lt;/a&gt; on the mongo query syntax. If you wanted the most recent (ie. descending order) then it would be &lt;code class=&quot;hljs http&quot;&gt;&lt;span class=&quot;hljs-attribute&quot;&gt;sort(_id&lt;/span&gt;: -1)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Similiarly in &lt;a href=&quot;https://www.ruby-lang.org/en/&quot;&gt;ruby&lt;/a&gt; using the Mongoid ORM (Object Relational Mapper) gem, it would be:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs css&quot;&gt;&lt;span class=&quot;hljs-selector-tag&quot;&gt;Posts&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.all&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.order_by&lt;/span&gt;(_&lt;span class=&quot;hljs-selector-tag&quot;&gt;id&lt;/span&gt;: 1)&lt;span class=&quot;hljs-selector-class&quot;&gt;.first&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you wanted to extract the timestamp from a document, you could add this function to your model definition:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs ruby&quot;&gt;&lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;created_at&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;hljs-comment&quot;&gt;# convert the BSON::ObjectId to a hex string &lt;/span&gt;
+  hex_id = &lt;span class=&quot;hljs-keyword&quot;&gt;self&lt;/span&gt;._id.to_s
+  &lt;span class=&quot;hljs-comment&quot;&gt;# take only the first 8 bytes which correspond to the time  &lt;/span&gt;
+  hex_timestamp = hex_string_id[&lt;span class=&quot;hljs-number&quot;&gt;0&lt;/span&gt;..&lt;span class=&quot;hljs-number&quot;&gt;7&lt;/span&gt;]
+  &lt;span class=&quot;hljs-comment&quot;&gt;# convert the hex string (base 16) to an integer &lt;/span&gt;
+  timestamp_integer = hex_timestamp.to_i(&lt;span class=&quot;hljs-number&quot;&gt;16&lt;/span&gt;)
+  &lt;span class=&quot;hljs-comment&quot;&gt;# convert the unix timestamp in seconds to a time object &lt;/span&gt;
+  &lt;span class=&quot;hljs-comment&quot;&gt;#   (which is implicitly returned)&lt;/span&gt;
+  timestamp = Time.at(timestamp_integer)
+&lt;span class=&quot;hljs-keyword&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which can be condensed to:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs css&quot;&gt;&lt;span class=&quot;hljs-selector-tag&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;hljs-selector-tag&quot;&gt;created_at&lt;/span&gt;
+  &lt;span class=&quot;hljs-selector-tag&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.at&lt;/span&gt; &lt;span class=&quot;hljs-selector-tag&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.id&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.to_s&lt;/span&gt;&lt;span class=&quot;hljs-selector-attr&quot;&gt;[0..7]&lt;/span&gt;&lt;span class=&quot;hljs-selector-class&quot;&gt;.to_i&lt;/span&gt;(16)
+&lt;span class=&quot;hljs-selector-tag&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;sources&quot;&gt;Sources&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.mongodb.com&quot;&gt; MongoDB introduction - mongodb.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.mongodb.com/manual/indexes&quot;&gt;MongoDB Indexes - mongodb.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.mongodb.com/manual/reference/mongo-shell/#queries&quot;&gt;MongoDB query syntax - mongodb.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.ruby-lang.org/en/&quot;&gt;Ruby - ruby-lang.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.mongodb.com/mongoid/master/#ruby-mongoid-tutorial&quot;&gt;Mongoid gem documentation - mongodb.com&lt;/a&gt;h&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="MongoDB" /><category term="indexing" /><category term="sorting" /><category term="date" /><category term="bson" /><category term="objectid" /><summary type="html">TODO: add blurb</summary></entry><entry><title type="html">Atlantec 2017</title><link href="http://localhost:4000/2017/06/05/atlantec-2017.html" rel="alternate" type="text/html" title="Atlantec 2017" /><published>2017-06-05T14:15:47+01:00</published><updated>2017-06-05T14:15:47+01:00</updated><id>http://localhost:4000/2017/06/05/atlantec-2017</id><content type="html" xml:base="http://localhost:4000/2017/06/05/atlantec-2017.html">&lt;p&gt;
   &lt;a href=&quot;http://atlantec.ie/&quot;&gt;Atlantec&lt;/a&gt; is an annual conference on Software Devlopment held in Galway. This year it took place in &lt;a href=&quot;https://www.nuigalway.ie/&quot;&gt;NUIG&lt;/a&gt; on May 25th. There was a host of great presentations covering the hot topics of Docker, Microservices and Machine Learning, while also branching out into the wider world of technology including Mars Exploration and Soft Robots to support Heart Functions. 
 &lt;/p&gt;
 

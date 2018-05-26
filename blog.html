@@ -12,18 +12,7 @@ layout: default
   <br/>
   {%- if site.posts.size > 0 -%}
     {%- for post in site.posts -%}
-      <a href="{{ post.url }}" class="post-excerpt">
-        <strong class="post-date">
-          {{ post.date | date: "%B %e, %Y" }}
-        </strong>
-        <br/>
-        <h2>
-          {{ post.title }}
-        </h2>
-        <p>
-          {{ post.excerpt | strip_html  }}...
-        </p>
-      </a>
+      {%- include post_excerpt.html post=post -%}
     {%- endfor -%}
   {%- endif -%}
 </div>

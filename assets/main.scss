@@ -16,8 +16,11 @@ $spacing-unit:     30px !default;
 $text-color:       #eee !default;
 $background-color: #202020 !default;
 $blog-color: #004180 !default;
+$blog-color-light: #0073e2 !default;
 $profile-color: #6d006d !default;
+$profile-color-light: #ce00ce !default;
 $contact-color: #006f00 !default;
+$contact-color-light: #00c100 !default;
 
 // Width of the content area
 $content-width:    800px !default;
@@ -29,6 +32,7 @@ $content-width:    800px !default;
 @import 'blog';
 @import 'profile';
 @import 'contact';
+// @import 'home';
 
 * {
   box-sizing: border-box;
@@ -159,4 +163,10 @@ aside {
   content {
     padding: 0 10px;
   }
+}
+
+
+.jumbotron {
+  background-color: #373737;
+  color: white;
 }

@@ -8,4 +8,10 @@
   a {
     color: $profile-color-light;
   }
+  hr {
+    width: 100%;
+    max-width: 800px;
+    margin: 10px auto;
+    border-bottom:2px solid $profile-color;
+  }
 }

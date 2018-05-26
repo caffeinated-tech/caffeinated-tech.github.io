@@ -1,27 +1,29 @@
 ---
 title: Home
 permalink: index.html
-layout: default
+layout: full_width
 ---
 
 <div id="home">
 
-  <div class="jumbotron">
-    <h1 class="display-4">Hello, world!</h1>
-    <p>
-      Welcome to my website. Here you will find posts focused on web design / development as well as systems / database administration. 
-    </p>
-    <p>
-      Below you will find my most recent post. You can also read <span id="blog"><a href="/blog" >my other blog posts</a></span>, find out more about me on <span id="profile"><a href="/profile"> my profile</a></span> or get in <span id="contact"><a href="/contact"> contact</a></span>.
-  </p>
+  <div class="hero">
+    <div class="container">
+      <h1 class="display-4">Hello, world!</h1>
+      <p>
+        Welcome to my website. Here you will find posts focused on web design / development as well as systems / database administration. 
+      </p>
+      <p>
+        Below you will find my most recent post. You can also read <span id="blog"><a href="/blog" >my other blog posts</a></span>, find out more about me on <span id="profile"><a href="/profile"> my profile</a></span> or get in <span id="contact"><a href="/contact"> contact</a></span>.
+      </p>
+    </div>
   </div>
   <br>
   <br>  
-  <h1>
-    Latest Post
-  </h1>
+  <div class="container" id="blog">
+    <h1>
+      Latest Post
+    </h1>
 
-  <div id="blog">
     {% assign post = site.posts[0] %}
     {%- include post_excerpt.html -%}
   </div>

@@ -1,0 +1,190 @@
+---
+layout: post
+title:  "Reliably Accessing Relative Files in NodeJS"
+date:   2018-08-11 16:49:01 +0100
+tags: [NodeJS, Node, Pathname, FS, filesystem, paths, root]
+---
+
+<p>
+  NodeJS can be confusing when accessing the filesystem via relative paths. Here is an overview of various ways of accessing the filesystem, and a simple solution to reliably load files anywhere in your project.
+</p>
+
+<!--end_excerpt-->
+<h3 id="cwd">TL;DR</h3>
+
+<pre>
+  <code class="language-javascript"> 
+    // Two types of relative paths:
+
+    process.cwd()
+    // => the directory from which the js file is executed
+    __dirname
+    // => the directory in which the js file is located
+
+
+    // To access files in nodejs:
+    const fs = require('fs')
+
+    fs.readFileSync("./foo/data.txt");
+    // => Relative paths use `process.cwd` meaning they are relative to where
+    //    the script is executed from.
+
+    // To use __dirname: 
+    const path = require('path')
+
+    fs.readFileSync(path.join(__dirname, './foo/data.txt'))
+    // => read the file relative to where this js file is located.
+
+    // But inside a deeply nested directory accessing another deeply nested
+    // directory is awkward. example:
+    fs.readFileSync(path.join(__dirname, '../../../foo/bar/baz/data.txt'))
+
+    // Suggested solution: save a global reference to the projects root dir 
+    // inside the main entry point so all files can load files relative to it.
+
+    // inside your main entry poin file (eg. index.js)
+    global.ROOT_DIR = __dirname
+
+    // inside any other file you can now read relative to the project root:
+    fs.readFileSync(path.join(ROOT_DIR, './foo/data.txt'))
+  </code>
+</pre>
+
+<!--end_excerpt-->
+<h3 id="cwd">Current Working Directory</h3>
+
+<p>
+  The Nodejs <a href="https://nodejs.org/api/fs.html">Filesystem</a> module lets you access files by absolute or relative paths to load whatever data your application requires. Relative paths are relative to <code>process.cwd()</code>, which is the directory from which
+  you executed the <code>node</code> command.
+</p>
+
+<blockquote>
+  <p>
+    Relative paths will be resolved relative to the current working directory as specified by process.cwd().
+   <a href="https://nodejs.org/api/fs.html#fs_file_paths"> -- nodejs.org</a>
+  </p>
+</blockquote>
+
+<p>
+  Let's see what this means in practice. Here I create a directory <code>./foo</code> (inside your <code>home</code> directory) which contains <code>print_cwd.js</code>. As I'm using a vagrant box, my file is <code>/home/vagrant/foo/print_cwd.js</code>:
+</p>
+
+
+<h4 class="code-title">./foo/print_cwd.js</h4>
+<pre>
+  <code class="language-javascript"> 
+    console.log('The current working directory is ' + process.cwd())
+  </code>
+</pre>
+
+<p>
+  Running this command from different directories:
+</p>
+
+<pre>
+  <code class="language-bash"> 
+    cd /home/vagrant
+    node foo/print_cwd.js    
+    # => The current working directory is /home/vagrant
+
+    cd /home/vagrant/foo
+    node print_cwd.js    
+    # => The current working directory is /home/vagrant/foo
+  </code>
+</pre>
+
+<p>
+  This isn't ideal as we can't gaurantee the commands will always be executed from the same diectory. What if node is executed from a cron job or other script? Let's look at some alternatives.
+</p>
+
+<h3 id="cwd">dirname</h3>
+
+<p>
+  NodeJS gives us another utility for accessing the current directory: <a href="https://nodejs.org/docs/latest/api/modules.html#modules_dirname"><code>__dirname</code></a>.
+  This is a variable available in every module (it's not a global, see the explanation <a href="https://nodejs.org/api/globals.html#globals_global_objects">here</a>). It contains the value of <code>path.dirname(__filename)</code>, where <code>__filename</code>.
+</p>
+<p>
+  Given this description, we can already guess how <code>__dirname</code> differs
+  from <code>process.cwd()</code>. Let's it out using the same format as above:
+</p>
+
+
+<h4 class="code-title">./foo/print_dirname.js</h4>
+<pre>
+  <code class="language-javascript"> 
+    console.log('__dirname is: ' + __dirname)
+  </code>
+</pre>
+
+<p>
+  Running this command from different directories:
+</p>
+
+<pre>
+  <code class="language-bash"> 
+    cd /home/vagrant
+    node foo/print_dirname.js    
+    # => __dirname is /home/vagrant/foo
+
+    cd /home/vagrant/foo
+    node print_dirname.js    
+    # => __dirname is /home/vagrant/foo
+  </code>
+</pre>
+
+<p>
+  <code>__dirname</code> gives the  directory in which the file is located, regardless of where it is executed from. This makes its behaviour more predictable than `process.cwd()`, but as your project grows and the directory structure becomes deeply nested, you will have to traverse many levels up and down. As an alternative you can keep track of the root directory of your project.  
+</p>
+
+
+<h3 id="cwd">Root Directory</h3>
+
+<p>
+  For large projects, you will likely adopt a structure with one or multiple <code>data</code> directories for storing files which have to be read from many different scripts. In these cases you will want to read relative to the projects root directory rather than the traversing up and down deep paths.
+</p>
+
+
+<h4 class="code-title">./index.js</h4>
+<pre>
+  <code class="language-javascript"> 
+    // save the root directory to a global variable to be accessed anywhere
+    global.ROOT_DIR = __dirname
+  </code>
+</pre>
+
+<h4 class="code-title">./foo/bar/baz/some_other_file.js</h4>
+<pre>
+  <code class="language-javascript"> 
+    const fs = require('fs')
+    const path = require('path')
+
+    // read files relative to root directory from any deeply nested script.
+    let json = fs.readFileSync(path.join(ROOT_DIR, './data/important.json'))
+  </code>
+</pre>
+
+<p>
+  This won't work if your project's entry point runs a web server, but you also need to run scripts from time to time (for example cron tasks managing the database). In this case you won't be able to create a new web server in every script, so you can't load the entry point in every script. Instead you can move setup operations (connect to DB, setup some global contexts, read config files etc.) into a config directory. This would be the place to set the root directory too, as these files need to be loaded for both scripts and the server:
+</p>
+
+<h4 class="code-title">./config/index.js</h4>
+<pre>
+  <code class="language-javascript">
+    const path = require('path')
+
+    // We are one directory down, so set the root dir to the parent dir:
+    global.ROOT_DIR = path.join(__dirname, '../')
+
+    // now run your other configuration steps
+    require('./database')
+    // ...
+  </code>
+</pre>
+
+<h3 id="cwd">Summary</h3>
+<p> 
+  Here I have covered an overview of reading relative files in a NodeJS project. The topic came up while I was working on my first large NodeJS project which require multiple restructures. I'm following the <a href="https://en.wikipedia.org/wiki/Domain-driven_design">Domain Driven Design</a> (DD) process to structure this project. If you'd like me to write up more posts about working with large NodeJS projects then get in <a href="/contact">touch</a>. 
+</p>
+<p>
+  Thanks for reading.
+</p>

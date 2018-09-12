@@ -1,7 +1,7 @@
-@font-face {
+/*@font-face {
   font-family: "Fira Code";
   src: url(../fonts/FiraCode-Regular.otf);
-}
+}*/
 a {
   text-decoration: none;
   color:white;
@@ -23,7 +23,8 @@ html {
 body {
   padding:0;
   margin: 0;
-  font-family:"Fira Code";
+  /*font-family:"Fira Code";*/
+  font-family:"Helvetica";
   background-color: #202020;
 }
 #contact h2 {

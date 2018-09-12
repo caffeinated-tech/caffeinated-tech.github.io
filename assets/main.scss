@@ -3,10 +3,6 @@
 
 @charset "utf-8";
 
-@font-face(FiraCode, _fonts/FiraCode-Medium, 500, normal, otf);
-@font-face(FiraCode, _fonts/FiraCode-Bold, 700, normal, otf);
-@font-face(FiraCode, _fonts/FiraCode-Light, 300, normal, otf);
-
 $base-font-size:   16px !default;
 $small-font-size:  $base-font-size * 0.875 !default;
 $base-line-height: 1.5 !default;
@@ -41,8 +37,7 @@ $content-width:    800px !default;
 body {
   padding:0;
   margin: 0;
-  // font-family: 'Ubuntu', sans-serif;
-  font-family:"Fira Code";
+  font-family: 'Arial', sans-serif;
   background-color: $background-color;
   color: $text-color;
 }

@@ -1,0 +1,153 @@
+---
+layout: post
+title:  "NodeJS 16 End of Life - Is it important?"
+date:   2023-07-31
+tags: [NodeJS, Node, upgrade, 16, 18, openssl]
+---
+
+<p>
+  NodeJS version 16 will no longer be supported after September 11th, 2023. This is 7 months earlier than initially planned. Why is it happening, what are the impacts, and do you need to upgrade?
+</p>
+
+<!--end_excerpt-->
+
+<br/>
+<br/>
+<br/>
+<p><img src="/images/node-release-plan.png" alt="NodeJS release Plan">   </p>
+<br/>
+<p>
+  Here is the release schedule for NodeJS taken from the <a href="https://github.com/nodejs/release#release-schedule">official github repository</a>. NodeJS 16 (codename <a href="https://stackoverflow.com/questions/50734477/what-is-this-carbon-boron-argon-which-is-used-for-nodejs">Gallium</a>) was initially released on 20th April 2021 with new features including support for V8 engine 9.0, new regex features, Timers API and (eventually) the AsyncLocalStorage API. Support is due to end on 11th September 2023. This 29 month support cycle of NodeJS 16 is 7 months shorter than the usual 3 year cycle which NodeJS adopts. This was done to coincide with the end of life of <a href="https://www.openssl.org/">OpenSSL</a> 1.1.1. You can read more about why this decision was made on the <a href="https://nodejs.org/en/blog/announcements/nodejs16-eol">NodeJS Blog</a>. 
+</p>
+
+
+<p>
+
+</p>
+
+
+<h2 id="cwd">Is this a big deal?</h2>
+
+<p>
+  Many users and applications run on old unsupported NodeJS versions. Looking at the <a href="https://storage.googleapis.com/access-logs-summaries-nodejs/index.html">download metrics</a> for NodeJS during July 2023 shows hundreds of thousands of downloads for versions 12.x and 14.x. If it's a common occurence, can it really be that bad? <b>YES</b> - by staying on unsupported versions you are not receiving security updates for known vulnerabilities. Here is an example of a <a href="https://nodejs.org/en/blog/vulnerability/june-2023-security-releases">NodeJS Update</a> made to fix several <a href="https://www.openssl.org/news/secadv/20230207.txt">OpenSSL vulnerabilities</a> which was only applied to NodeJS 16, 18 and 20. This is a concrete example of why 16.x is already insecure compared to 18.x. It will only get worse the longer you wait. 
+</p>
+
+
+<h2 id="how-to-upgrade">How do I upgrade?</h2>
+
+<p>
+  First you should check which node version you are using:
+</p>
+
+<pre>
+  <code class="language-bash"> 
+    node -v
+  </code>
+</pre>
+
+<p>
+  If you are using any version lower than 18.x, you should definitely upgrade. If you are on an older version than 16.x, then this guide may not be enough an you will have other things break. You can check the <a href="https://nodejs.org/en/blog/release">official releases</a> for detailed changelogs.
+</p>
+  How you upgrade your NodeJS version will depend on how you installed it and your OS. Here are some of the most common:
+</p>
+
+<h3 id="how-to-upgrade-nvm">Upgrade using NVM</h3>
+<p>
+  <a href="https://github.com/nvm-sh/nvm">NVM</a> is a popular node version manager. The command below will install the version of node which is currently in LTS (Long Term Support), which at the time of writing would be 18.17.0. It will then reinstall all node packages using this NodeJS version.
+</p>
+<pre>
+  <code class="language-bash"> 
+    nvm install 'lts/*' --reinstall-packages-from=current
+  </code>
+</pre>
+
+<h3 id="how-to-upgrade-website">Upgrade from website</h3>
+<p>
+  If you downloaded an installer directly from <a href="https://nodejs.org/en/download">NodeJS.org</a> then you should download the current LTS version and follow the usual instructions for installing it to replace your old version. Don't forget to reinstall node packages afterwards, including any global packages.
+</p>
+<pre>
+  <code class="language-bash"> 
+    npm i && npm i -g
+  </code>
+</pre>
+
+<h3 id="how-to-upgrade-brew">Upgrade on Mac using brew</h3>
+<p>
+  <a href="https://brew.sh/">Brew</a> is the ever popular package manager for Mac. There can be some caveats with upgrading node using brew, for which I direct you to this excellent <a href="https://stackoverflow.com/questions/5056115/how-to-install-latest-version-of-node-using-brew">StackOverflow thread</a>. Don't forget to reinstall node packages afterwards, including any global packages.
+</p>
+<pre>
+  <code class="language-bash"> 
+    brew upgrade node
+  </code>
+</pre>
+
+
+<h2 id="breaking-changes">Did anything break?</h2>
+
+<p>
+  Thankfully everything should keep running for most users when upgrading NodeJS from 16.x to 18.x. There are some major changes listed in the <a href="https://nodejs.org/en/blog/release/v18.0.0">release</a>, but you will also need to check minor version release notes as the DNS depreceation was already <a href="https://nodejs.org/en/blog/release/v18.4.0">reverted in 18.4</a>. Most users interact with some of these APIs only through intermediary libraries. When NodeJS plans to remove existing features, they first add warnings, before removing it fully in later releases. This gives actively developed projects time to adapt to changes while giving users an uninterrupted experience as much as possible. 
+</p>
+<p>
+  To be certain that everything in your codebase still works, you will need some extensive testing. The biggest breaking changes should throw errors as soon as you launch your node applications. Ideally you should have a high coverage of regression tests to help with this. But not every development team exists in such a utopia. If anything breaks as a result of this upgrade, use it as an argument in favor of automated tests and CI/CD.
+</p>
+<p>
+  How come there are no major problems with OpenSSL in this upgrade? Simply put, because NodeJS did such a good job with the upgrade. The OpenSSL changes were first included in Node 17 was released 19 October 2021. Major libraries depending on OpenSSL have already upgraded to version 3 with the help of an extensive <a href="https://www.openssl.org/docs/man3.0/man7/migration_guide.html">migration guide</a>. Nevertheless, if you are using cryptography or certificates directly in NodeJS you should check this document if any changes impact your code.
+</p>
+
+<p>
+  One example of a breaking change is the dropped support of <a href="https://nodejs.org/docs/latest-v18.x/api/crypto.html#cryptocreatehashalgorithm-options">MD4 hashing</a> via node crypto. Running the below code in Node 16 will run (though not print any output) while Node 18 will throw an error.
+</p>
+<pre>
+  <code class="language-javascript"> 
+    crypto.createHash("md4")
+  </code>
+</pre>
+
+
+<p>
+  No one should be using the <a href="http://practicalcryptography.com/hashes/md4-hash/">MD4 hash algorithm</a> for any cryptographical purposes. Though it's still useful for teaching and understanding the principles of message digest algorithms. If you really need to use it, you can always enable legacy OpenSSL features (at your own risk). This command will run even against Node 18+
+</p>
+
+<pre>
+  <code class="language-bash"> 
+    node --openssl-legacy-provider -e "crypto.createHash(\"md4\")"
+  </code>
+</pre>
+
+
+<h2 id="staying-up-to-date">Staying upgraded</h2>
+
+<p>
+  Even if you are on a currently supported LTS version of NodeJS, you need to stay up to date on major vulnerabilities and changes. The easiest way for NodeJS is to check their <a href="https://nodejs.org/en/blog">officical blog</a> every few days. The laziest way to do it is using a service like <a href="https://newreleases.io/">NewReleases.io</a> or, if you prefer old school methods, subscribe to NodeJS's <a href="https://nodejs.org/en/feed/releases.xml">RSS feed</a>.
+</p>
+<p>
+  While you're at it, I recommend reviewing all of your tech stack and checking for updates across major libraries and frameworks. Especially those with network access, as an exploit in any of these could open up your entire application/server to bad actors. 
+</p>
+
+<h2 id="how-to-free">Free stuff!</h2>
+
+<p>
+  After all that work you are finally on NodeJS 18.x and are safe from unpatched exploits until this version reaches End of Life (30th April 2025). It may seem a futile part of software development to stay on top of dependency updates, but there's a silver lining: shiny new features!
+</p>
+
+<ul>
+  <li>
+    The <a href="https://nodejs.org/docs/latest-v18.x/api/globals.html#fetch">fetch API</a> which you may know from browser environments is now a part of NodeJS
+  </li>
+  <li>
+    A native <a href="https://origin.nodejs.org/dist/latest-v18.x/docs/api/cli.html#--watch">--watch</a> CLI option which reruns commands when files change.
+  </li>
+  <li>
+    Faster perfomance thanks to <a href="https://v8.dev/blog/v8-release-90"> V8 engine v9</a>.
+  </li>
+</ul>
+
+<p>
+  For more changes, take a look at the <a href="https://nodejs.org/en/blog/announcements/v18-release-announce">official release announcement</a> or the excellent blog post on <a href="https://nodesource.com/blog/11-features-nodeJS-18-to-try/">NodeSource</a>.
+</p>
+
+<p>
+  Happy Coding!
+</p>
+
+
